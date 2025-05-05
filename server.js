@@ -21,7 +21,7 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
+const usersRoutes = require('./routes/stories');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -35,8 +35,16 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+// app.get('/', (req, res) => {
+//   res.render('index');
+// });
+
+//replaced the above with this for rendering the home page. I did this becuase our homepage will need to render in some number of stories
 app.get('/', (req, res) => {
-  res.render('index');
+  stories.getFrontpageStories()
+    .then((stories) => {
+      res.json(stories);
+    })
 });
 
 app.listen(PORT, () => {
