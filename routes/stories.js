@@ -7,6 +7,8 @@
 
 const express = require('express');
 const router = express.Router();
+//const storyQueries = require('../db/queries/storyQueries')
+
 //-----------------------------GET----------------------------->
 
 router.get('/', (req, res) => {
@@ -14,7 +16,8 @@ router.get('/', (req, res) => {
   storyQueries.getStories()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -24,7 +27,8 @@ router.get('/write', (req, res) => {
   storyQueries.getInProgressStoriesByUserId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -34,7 +38,8 @@ router.get('/read', (req, res) => {
   storyQueries.getCompleteStoriesByUserId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -44,7 +49,8 @@ router.get('/:owner_id', (req, res) => {
   storyQueries.getStoriesByOwnerId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -54,7 +60,8 @@ router.get('/write/:story_id', (req, res) => {
   storyQueries.getInProgressStoryByUserId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -64,7 +71,8 @@ router.get('/read/:story_id', (req, res) => {
   storyQueries.getCompleteStoryByUserId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
@@ -76,14 +84,26 @@ router.get('/:owner_id/:story_id', (req, res) => {
   storyQueries.getStoryByOwnerId()
     .then((stories) => {
       //render results of query
-      res.render('stories');
+      // res.render('stories');
+      res.json(stories);
     });
 });
 
 //-----------------------------POST----------------------------->
 
+// this will take inputs from the owners story and append them to the story
+// the first input will be a title from the owner
+// the second input will be the first paragraph from the owner
+// all other appended inputs will be from contributions
+router.post('/:owner_id/:story_id', (req, res) => {
 
+});
 
+// submit button will add contribution to feed
+// note: this should not refresh the page!
+router.post('/write/:story_id', (req, res) => {
+
+});
 
 //-----------------------------EXPORTS----------------------------->
 
