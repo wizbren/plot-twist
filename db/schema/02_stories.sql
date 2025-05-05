@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS stories CASCADE;
+
+
+CREATE TABLE stories (
+  id SERIAL PRIMARY KEY,
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  text_body TEXT,
+  complete BOOLEAN DEFAULT FALSE
+);
