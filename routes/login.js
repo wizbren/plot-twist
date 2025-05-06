@@ -12,6 +12,13 @@ const router = express.Router();
 
 //get login page and renders it with buttons
 router.get('/', (req, res) => {
+
+  //if logged in --->redirect from /register ---> /urls
+  if (req.session["userId"] !== undefined) {
+    res.redirect("/");
+    return;
+  }
+
   // res.render('login');
   res.json(login);
 });
