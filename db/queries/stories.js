@@ -9,16 +9,16 @@ const getAllStories = () => {
 };
 
 
-const getStoryById = (id) => {
-  return db.query('SELECT * FROM stories WHERE id = $1;')
+const getStoryById = (storyId) => {
+  return db.query('SELECT * FROM stories WHERE id = $1;', [storyId])
     .then((data) => {
       return data.rows[0];
     });
 };
 
 
-const getStoriesByUserId = (owner_id) => {
-  return db.query('SELECT * FROM stories WHERE owner_id = $1', [owner_id])
+const getStoriesByUserId = (ownerId) => {
+  return db.query('SELECT * FROM stories WHERE owner_id = $1', [ownerId])
     .then((data) => {
       return data.rows;
     });
@@ -48,6 +48,46 @@ const getInProgressStories = () => {
     });
 };
 
+/*Change the name*/
+const getInProgressStoriesNotOwnedByUser = (userId) => {
+  return db.query('SELECT * FROM stories WHERE complete = false AND owner_id != $1;', [userId])
+    .then((data) => {
+      return data.rows;
+    });
+};
+
+/*Change the name*/
+const getCompletedStoriesNotOwnedByUser = (userId) => {
+  return db.query('SELECT * FROM stories WHERE owner_id != $1 AND complete = true;', [userId])
+    .then((data) => {
+      return data.rows;
+    });
+};
+
+/*Change the name*/
+const getSpecificInProgressStoryNotOwnedByUser = (storyId, userId) => {
+  return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id != $2 AND complete = false;', [storyId, userId])
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
+/*Change the name???*/
+const getSpecificCompletedStoryById = (storyId) => {
+  return db.query('SELECT * FROM stories WHERE id = $1 AND complete = true;', [storyId])
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
+
+const getInProgressStoryByOwner = (storyId, userId) => {
+  return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id = $2 AND complete = false;', [storyId, userId])
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
 
 module.exports = {
   getAllStories,
@@ -55,5 +95,10 @@ module.exports = {
   getStoriesByUserId,
   getStoryByTitle,
   getCompletedStories,
-  getInProgressStories
+  getInProgressStories,
+  getInProgressStoriesNotOwnedByUser,
+  getCompletedStoriesNotOwnedByUser,
+  getSpecificInProgressStoryNotOwnedByUser,
+  getSpecificCompletedStoryById,
+  getInProgressStoryByOwner
 };
