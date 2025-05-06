@@ -13,9 +13,13 @@ const router = express.Router();
 //-----------------------------POST----------------------------->
 
 //when user clicks logout ---> clears cookie and redirects to /login
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
   req.session = null;  // Destroy the session
-  res.redirect("/login");
+  res.redirect('/login');
 });
 
 //-----------------------------EXPORTS----------------------------->

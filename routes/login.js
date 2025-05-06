@@ -20,14 +20,14 @@ router.get('/', (req, res) => {
   }
 
   // res.render('login');
-  res.json(login);
+  res.json({ message: 'Login page placeholder' });
 });
 
 //button click gets login route for specific user clicked based off of id
 router.get('/:id', (req, res) => {
   const userId = req.params.id;
   //set a cookie using cookie parser
-  req.session.userId = userId;
+  req.session.user_id = userId;
   // redirect to /
   res.redirect('/');
 });

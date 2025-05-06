@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-const storyQueries = require('../db/queries/storyQueries')
+// const storyQueries = require('../db/queries/storyQueries')
 
 //-----------------------------GET----------------------------->
 
@@ -25,8 +25,8 @@ router.get('/contribute', (req, res) => {
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
-      res.render('contribute', templateVars);
-      // res.json(stories);
+      // res.render('contribute', templateVars);
+      res.json({ message: 'Contribution page placeholder' });
     });
 });
 
@@ -136,7 +136,6 @@ router.get('/:owner_id', (req, res) => {
 router.post('/:owner_id/:story_id', (req, res) => {
   const { owner_id, story_id } = req.params;
   const { title, text_body, contribution_id, action } = req.body; //action is set to approved when approve button is clicked by owner
-
 
   // If it's the initial contribution
   if (title && text_body) {
