@@ -26,7 +26,7 @@ router.get('/contribute', (req, res) => {
       //render results of query
       const templateVars = { stories }
       // res.render('contribute', templateVars);
-      res.json({ message: 'Contribution page placeholder' });
+      res.json({ message: 'Contribution page placeholder', stories });
     });
 });
 
@@ -59,7 +59,7 @@ router.get('/contribute/:story_id', (req, res) => {
   }
 
   //database query to get a specific story based on a specific user_id that they are contributing to
-  storyQueries.getInProgressStoryByUserId(req.session['user_id'])
+  storyQueries.getInProgressStoryByUserId(req.session['user_id']) //POSSIBLE BUG ‼️‼️‼️‼️‼️ maybe use story_id
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -150,7 +150,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (action === 'approve') {
     return storyQueries.approveContribution(contribution_id, story_id) //this query needs to append the existing story at the passed story id and add contribution id
       .then(() => {
-        return storyQueries.clearPendingContributions(story_id) //query must delete all pending contributions in datatable
+        return storyQueries.clearPendingContributions(story_id) //query must switch all booleans to false for all pending contributions in datatable
       })
       .then(() => {
         res.redirect(`/${owner_id}/${story_id}`)
