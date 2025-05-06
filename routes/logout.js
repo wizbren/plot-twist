@@ -10,24 +10,13 @@ const router = express.Router();
 
 //-----------------------------GET----------------------------->
 
-//get login page and renders it with buttons
-router.get('/', (req, res) => {
-  // res.render('login');
-  res.json(login);
-});
-
-//button click gets login route for specific user clicked based off of id
-router.get('/:id', (req, res) => {
-  const userId = req.params.id;
-  //set a cookie using cookie parser
-  req.session.userId = userId;
-  // redirect to /
-  res.redirect('/');
-});
-
 //-----------------------------POST----------------------------->
 
-//add a post route for user security. for now get request buttons as per above request will work just fine
+//when user clicks logout ---> clears cookie and redirects to /login
+router.post("/", (req, res) => {
+  req.session = null;  // Destroy the session
+  res.redirect("/login");
+});
 
 //-----------------------------EXPORTS----------------------------->
 
