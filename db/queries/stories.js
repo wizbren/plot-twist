@@ -88,6 +88,81 @@ const getInProgressStoryByOwner = (storyId, userId) => {
     });
 };
 
+/* CHECK BELOW */
+
+const finishStory = (story_id) => {
+  const queryComplete = `
+    UPDATE stories
+    SET complete = true
+    WHERE id = $1
+    RETURNING *;
+  `;
+  return db.query(queryComplete, [story_id])
+    .then(result => result.rows[0]);
+};
+
+
+const addInitialStoryContent = (owner_id, title, text_body) => {
+  const storyQuery = `
+    INSERT INTO stories (owner_id, title, text_body)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+
+  return db.query(storyQuery, [owner_id, title, text_body])
+    .then(storyResult => {
+      const story = storyResult.rows[0];
+      return story;
+    });
+};
+
+
+const clearPendingContributions = (story_id) => {
+  const clearPending = `
+    UPDATE contributions
+    SET pending = false
+    WHERE story_id = $1 AND pending = true
+    RETURNING *;
+  `;
+
+  return db.query(clearPending, [story_id])
+    .then(result => result.rows);
+};
+
+/* THESE MIGHT NOT BE OK */
+
+//contributor submits a paragraph and it is added to the stack of pending contributions
+const submitContribution = (user_id, story_id, text) => {
+  const storyContribution = `
+  INSERT INTO contributions (user_id, story_id, text) 
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;                                 //Changed contribution_id in the INSERT line to user_id, to match the column in function parameter
+  return db.query(storyContribution, [user_id, story_id, text])
+  .then(result => result.rows[0]);      //Changed from result.rows => result.rows[0], because it's only returning one row of data (the new contribution)
+};
+
+
+const approveContribution = (contribution_id) => {
+  const queryUpdateStory = `
+    UPDATE stories
+    SET text_body = CONCAT(stories.text_body, ' ', contributions.text)
+    FROM contributions
+    WHERE contributions.id = $1 AND stories.id = contributions.story_id;
+  `;
+  //Below marks contribution as approved
+  const queryApproveStory = `
+    UPDATE contributions
+    SET pending = false
+    WHERE id = $1;
+  `;
+  //Run the queryUpdateStory to update the story
+  return db.query(queryUpdateStory, [contribution_id])
+    .then(() => {
+      return db.query(queryApproveStory, [contribution_id]);
+    });
+};
+
 
 module.exports = {
   getAllStories,
@@ -100,5 +175,28 @@ module.exports = {
   getCompletedStoriesNotOwnedByUser,
   getSpecificInProgressStoryNotOwnedByUser,
   getSpecificCompletedStoryById,
-  getInProgressStoryByOwner
+  getInProgressStoryByOwner,
+  finishStory,
+  addInitialStoryContent,
+  clearPendingContributions,
+  submitContribution,
+  approveContribution
 };
+
+// const query = `
+// UPDATE stories
+// SET text_body = stories.text_body || ' ' || contributions.text
+// FROM contributions
+// WHERE contributions.id = $1
+//   AND stories.id = contributions.story_id
+// RETURNING stories.*;
+// `;
+
+//`
+//UPDATE text_body
+//SELECT CONCAT(stories.text_body, ' ', contributions.text)
+//FROM stories
+//JOIN contributions ON story_id = stories.id
+//WHERE contributions.id = $1
+//RETURNING *;
+//`;
