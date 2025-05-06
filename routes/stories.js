@@ -11,24 +11,25 @@ const router = express.Router();
 
 //-----------------------------GET----------------------------->
 
-router.get('/', (req, res) => {
-  //Database query, and fetch all (up to LIMIT), stories
-  storyQueries.getStories()
-    .then((stories) => {
-      //render results of query
-      // res.render('stories');
-      res.json(stories);
-    });
-});
+// router.get('/', (req, res) => {
+//   //Database query, and fetch all (up to LIMIT), stories
+//   storyQueries.getStories()
+//     .then((stories) => {
+//       //render results of query
+//       // res.render('stories');
+//       res.json(stories);
+//     });
+// });
 
 //get all IN PROGRESS stories that user DOES NOT own
 router.get('/write', (req, res) => {
   //Database query to get all stories a user is currently making contributions on
-  storyQueries.getInProgressStoriesByUserId()
+  storyQueries.getInProgressStoriesByUserId(user_id) //use cookies to set this value req.cookies.id
     .then((stories) => {
       //render results of query
-      // res.render('stories');
-      res.json(stories);
+      const templateVars = {stories}
+      res.render('stories', templateVars); //go look at tiny app template vars
+      // res.json(stories);
     });
 });
 
