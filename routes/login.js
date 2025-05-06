@@ -11,21 +11,22 @@ const router = express.Router();
 
 //-----------------------------GET----------------------------->
 
-//get login page and renders it
+//get login page and renders it with buttons
 router.get('/', (req, res) => {
-  res.render('login');
+  // res.render('login');
+  //use buttons to send id
   res.json(login);
+});
+
+router.get('/:id', (req, res) => {
+  const userId = req.params.id;
+  //set a cookie using cookie parser
+  // redirect to /
 });
 
 //-----------------------------POST----------------------------->
 
-router.post('', (req, res) => {
-  //database query to get a specific user based on their info (id||username||password)
-  loginQueries.getUser()
-    .then((user) => {
-      res.redirect('/')
-    })
-});
+//add a post route for user security
 
 //-----------------------------EXPORTS----------------------------->
 
