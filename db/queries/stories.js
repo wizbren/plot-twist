@@ -33,9 +33,27 @@ const getStoryByTitle = (title) => {
 };
 
 
+const getCompletedStories = () => {
+  return db.query ('SELECT * FROM stories WHERE complete = true;')
+    .then((data) => {
+      return data.rows;
+    });
+};
+
+
+const getInProgressStories = () => {
+  return db.query ('SELECT * FROM stories WHERE complete = false;')
+    .then((data) => {
+      return data.rows;
+    });
+};
+
+
 module.exports = {
   getAllStories,
   getStoryById,
   getStoriesByUserId,
-  getStoryByTitle
+  getStoryByTitle,
+  getCompletedStories,
+  getInProgressStories
 };
