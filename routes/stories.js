@@ -11,32 +11,36 @@ const router = express.Router();
 
 //-----------------------------GET----------------------------->
 
-// router.get('/', (req, res) => {
-//   //Database query, and fetch all (up to LIMIT), stories
-//   storyQueries.getStories()
-//     .then((stories) => {
-//       //render results of query
-//       // res.render('stories');
-//       res.json(stories);
-//     });
-// });
-
 //get all IN PROGRESS stories that user DOES NOT own
 router.get('/write', (req, res) => {
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
   //Database query to get all stories a user is currently making contributions on
-  storyQueries.getInProgressStoriesByUserId(user_id) //use cookies to set this value req.cookies.id
+  storyQueries.getInProgressStoriesByUserId(req.session['user_id']) //use cookies to set this value req.cookies.id
     .then((stories) => {
       //render results of query
-      const templateVars = {stories}
-      res.render('stories', templateVars); //go look at tiny app template vars
+      const templateVars = { stories }
+      res.render('stories', templateVars);
       // res.json(stories);
     });
 });
 
 //get all COMPLETE stories that user DOES NOT own
 router.get('/read', (req, res) => {
-  //database query to get all completed stories that a use made contributions on
-  storyQueries.getCompleteStoriesByUserId()
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
+  //database query to get all completed stories that a user made contributions on
+  storyQueries.getCompleteStoriesByUserId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       // res.render('stories');
@@ -46,8 +50,15 @@ router.get('/read', (req, res) => {
 
 //get all stories that user owns (owner_id)
 router.get('/:owner_id', (req, res) => {
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
   //database query to get all stories associated with users owner_id
-  storyQueries.getStoriesByOwnerId()
+  storyQueries.getStoriesByOwnerId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       // res.render('stories');
@@ -57,8 +68,15 @@ router.get('/:owner_id', (req, res) => {
 
 //get specific IN PROGRESS story that user DOES NOT own
 router.get('/write/:story_id', (req, res) => {
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
   //database query to get a specific story based on a specific user_id that they are contributing to
-  storyQueries.getInProgressStoryByUserId()
+  storyQueries.getInProgressStoryByUserId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       // res.render('stories');
@@ -68,6 +86,13 @@ router.get('/write/:story_id', (req, res) => {
 
 //get specific COMPLETE story
 router.get('/read/:story_id', (req, res) => {
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
   //database query to get a specific completed story
   storyQueries.getCompleteStoryByUserId()
     .then((stories) => {
@@ -79,10 +104,17 @@ router.get('/read/:story_id', (req, res) => {
 
 //get specific story that user owns (owner_id)
 router.get('/:owner_id/:story_id', (req, res) => {
+
+  //check if logged in. RESTRICTED PERMISSION
+  if (!req.session['user_id']) {
+    res.redirect('/login');
+    return;
+  }
+
   //database query to get a specific story that a user owns
   //note, this will only matter if the story is in progress
   //completed stories will route to /read/:story_id
-  storyQueries.getStoryByOwnerId()
+  storyQueries.getStoryByOwnerId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       // res.render('stories');
