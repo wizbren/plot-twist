@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Plot-Twist - Unowned In-Progress Stories</title>
+</head>
+
+<body>
+
+  <!--Navigation Bar partial-->
+  <%- include('partials/_navBar') %>
+
+    <div class="page-layout">
+      <!--Profile Bar/header partial-->
+      <%- include('partials/_header') %>
+
+        <!--Main Element area-->
+        <main class="main-content"> <!--Trying something out with the filter button-->
+          <button class="filter-button" aria-label="Open filter menu">&#9660;</button>
+
+          <section class="user-story-row">
+            <% stories.forEach(story=> { %>
+              <div class="user-box">
+                <p class="username">
+                  <%= story.owner_id %>
+                </p>
+                <img src="$PLACEHOLDER$" alt="UserOne's Profile Pic">
+              </div>
+              <div class="story-box">
+                <div class="story-title">
+                  <h3>
+                    <%= story.title %>
+                  </h3>
+                  <div class="story-buttons">
+                    <button>LIKE</button>
+                    <button>EDIT</button>
+                    <button>DELETE</button>
+                  </div>
+                </div>
+                <p class="story-text">
+                  <%= story.text_body %>
+                </p>
+              </div>
+              <% }); %>
+          </section>
+
+        </main>
+    </div>
+
+</body>
+
+</html>
