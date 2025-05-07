@@ -1,5 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plot-Twist - Home</title>
+</head>
+
+<body>
+
+  <!--Navigation Bar partial-->
+  <%- include('partials/navBar') %>
+
+  <div class="page-layout">
+    <!--Profile Bar/header partial-->
+     <%- include('partials/header') %>
+
+     <!--Main Element area-->
+     <main class="main-content">      <!--Trying something out with the filter button-->
+      <button class="filter-button" aria-label="Open filter menu">&#9660;</button>        
+
+      <!--User/Story #1-->
+      <section class="user-story-row">
+        <div class="user-box">
+          <p class="username">UserOne</p>
+          <img src="$PLACEHOLDER$" alt="UserOne's Profile Pic">
+        </div>
+        <div class="story-box">
+          <div class="story-title">
+            <h3>Story Title #1</h3>
+            <div class="story-buttons">
+              <button>LIKE</button>
+              <button>EDIT</button>
+              <button>DELETE</button>
+            </div>
+          </div>
+          <p class="story-text">Story text for UserOne's story</p>
+        </div>
+      </section>
+
+      <!--User/Story #2-->
+      <section class="user-story-row">
+        <div class="user-box">
+          <p class="username">UserTwo</p>
+          <img src="$PLACEHOLDER$" alt="UserTwo's Profile Pic">
+        </div>
+        <div class="story-box">
+          <div class="story-title">
+            <h3>Story Title #2</h3>
+            <div class="story-buttons">
+              <button>LIKE</button>
+              <button>EDIT</button>
+              <button>DELETE</button>
+            </div>
+          </div>
+          <p class="story-text">Story text for UserTwo's story</p>
+        </div>
+      </section>
+
+      <!--User/Story #3-->
+      <section class="user-story-row">
+        <div class="user-box">
+          <p class="username">UserThree</p>
+          <img src="$PLACEHOLDER$" alt="UserThree's Profile Pic">
+        </div>
+        <div class="story-box">
+          <div class="story-title">
+            <h3>Story Title #3</h3>
+            <div class="story-buttons">
+              <button>LIKE</button>
+              <button>EDIT</button>
+              <button>DELETE</button>
+            </div>
+          </div>
+          <p class="story-text">Story text for UserThree's story</p>
+        </div>
+      </section>
+
+     </main>
+  </div>
+
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <title>Home Page</title>
@@ -21,4 +105,4 @@
   <h1>Have fun! 🥔</h1>
 </body>
 
-</html>
+</html>-->
