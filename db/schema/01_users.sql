@@ -8,3 +8,5 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   avatar TEXT
 );
+
+GRANT ALL PRIVILEGES ON TABLE users TO labber;
