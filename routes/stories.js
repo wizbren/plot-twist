@@ -157,6 +157,30 @@ router.get('/:owner_id', (req, res) => {
 
 //-----------------------------POST----------------------------->
 
+// submit button will add contribution to feed
+// note: this should not refresh the page!
+router.post('/contribute/:story_id', (req, res) => {
+  const { story_id } = req.params;
+  const { text } = req.body;
+  const user_id = req.session['user_id'] || 2; //individual contributing the text
+
+  console.log(story_id, '✅', text, '✅', user_id);
+
+  //error handling for blank submissions
+  if (!text) {
+    return res.status(400).send('No paragraph submitted');
+  }
+
+  console.log("this worked 5: ✅")
+  stories.submitContribution(user_id, story_id, text) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
+  // console.log("this worked 6: ✅")
+    .then(() => res.status(200).send('Contribution submitted for approval'))
+    .catch(err => {
+      console.error('Database query error:', err);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 // this will take inputs from the owners story and append them to the story
 // the first input will be a title from the owner
 // the second input will be the first paragraph from the owner
@@ -167,7 +191,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
 
   // If it's the initial contribution
   if (title && text_body) {
-    return stories.addInitialStoryContent(owner_id, story_id, title, text_body) // this query needs to initialise a story with the data here
+    return stories.addInitialStoryContent(owner_id, title, text_body) // this query needs to initialise a story with the data here
       .then(() => {
         console.log("this worked 1: ✅")
         res.redirect(`/${owner_id}/${story_id}`)
@@ -199,27 +223,6 @@ router.post('/:owner_id/:story_id', (req, res) => {
 
   // Default fallback
   res.status(400).send('Invalid request'); //idk why we would hit this error, but if none of the above are true this error reads out
-});
-
-// submit button will add contribution to feed
-// note: this should not refresh the page!
-router.post('/contribute/:story_id', (req, res) => {
-  const { story_id } = req.params;
-  const { text } = req.body;
-  const user_id = req.session['user_id'] || 2; //individual contributing the text
-
-  console.log(story_id,'✅', text,'✅', user_id);
-
-  //error handling for blank submissions
-  if (!text) {
-    return res.status(400).send('No paragraph submitted');
-  }
-
-  console.log("this worked 5: ✅")
-  stories.submitContribution(user_id, story_id, text) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
-  console.log("this worked 6: ✅")
-
-    .then(() => res.status(200).send('Contribution submitted for approval'))
 });
 
 //-----------------------------EXPORTS----------------------------->
