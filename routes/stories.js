@@ -68,11 +68,11 @@ router.get('/contribute/:story_id', (req, res) => {
 
   //database query to get a specific story based on a specific user_id that they are contributing to
   stories.getSpecificInProgressStoryNotOwnedByUser(story_id, req.session['user_id'])
-    .then((stories) => {
+    .then((story) => {
       //render results of query
-      // const templateVars = { stories }
-      // res.render('contribute_story_id', templateVars);
-      res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
+      const templateVars = { story }
+      res.render('contribute-story', templateVars);
+      // res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
     })
     .catch(err => {
       console.error(err);
