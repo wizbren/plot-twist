@@ -22,7 +22,7 @@
     <section class="story-block owner-story">
       <div class="story-header">
         <div class="user-info">
-          <img src="<%= story.user_image %>" class="avatar" />
+          <img src="<%= story.user_image %>" alt="User Image" class="avatar" />
           <span class="author-name"><%= story.owner_id %></span>
         </div>
         <div class="story-meta">
@@ -41,19 +41,19 @@
 
     <!-- Submitted Contributions -->
     <section class="contributions">
-      <% if (contributions && contributions.length) { %>
-        <% contributions.forEach(c => { %>
+      <% if (story && story.length) { %>
+        <% story.forEach(contribution => { %>
           <div class="story-block contribution">
             <div class="story-header">
               <div class="user-info">
-                <img src="<%= c.user_image %>" class="avatar" />
-                <span class="author-name"><%= c.username %></span>
+                <img src="<%= contribution.user_image %>" alt="User Image" class="avatar" />
+                <span class="author-name"><%= contribution.username %></span>
               </div>
               <div class="story-meta">
                 <h3 class="story-title">Contribution</h3>
               </div>
             </div>
-            <p class="story-body"><%= c.text %></p>
+            <p class="story-body"><%= contribution.text %></p>
           </div>
         <% }) %>
       <% } %>
