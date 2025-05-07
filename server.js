@@ -63,9 +63,10 @@ app.get('/', (req, res) => {
     .then((stories) => {
       // console.log(stories);
       //render results of query
-      // const templateVars = { stories }
-      // res.render('stories', templateVars);
-      res.json({ message: 'front page placeholder', stories});
+      const templateVars = { stories };
+      console.log(templateVars);
+      res.render('index', templateVars);
+      //res.json({ message: 'front page placeholder', stories});
     })
     .catch(err => {
       console.error(err);
