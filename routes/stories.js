@@ -169,6 +169,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (title && text_body) {
     return stories.addInitialStoryContent(owner_id, story_id, title, text_body) // this query needs to initialise a story with the data here
       .then(() => {
+        console.log("this worked 1: ✅")
         res.redirect(`/${owner_id}/${story_id}`)
       })
       .catch(err => res.status(500).send(err.message));
@@ -178,9 +179,11 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (action === 'approve') {
     return stories.approveContribution(contribution_id, story_id) //this query needs to append the existing story at the passed story id and add contribution id
       .then(() => {
+        console.log("this worked 2: ✅")
         return stories.clearPendingContributions(story_id) //query must switch all booleans to false for all pending contributions in datatable
       })
       .then(() => {
+        console.log("this worked 3: ✅")
         res.redirect(`/${owner_id}/${story_id}`)
       })
   }
@@ -189,6 +192,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (action === 'finish') {
     return stories.finishStory(story_id) //this query should switch is complete boolean to true
       .then(() => {
+        console.log("this worked 4: ✅")
         res.redirect(`/${owner_id}/${story_id}`)
       })
   }
@@ -201,15 +205,20 @@ router.post('/:owner_id/:story_id', (req, res) => {
 // note: this should not refresh the page!
 router.post('/contribute/:story_id', (req, res) => {
   const { story_id } = req.params;
-  const { text_body } = req.body;
-  const user_id = req.session['user_id']; //individual contributing the text
+  const { text } = req.body;
+  const user_id = req.session['user_id'] || 2; //individual contributing the text
+
+  console.log(story_id,'✅', text,'✅', user_id);
 
   //error handling for blank submissions
-  if (!text_body) {
+  if (!text) {
     return res.status(400).send('No paragraph submitted');
   }
 
-  stories.submitContribution(user_id, story_id, text_body) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
+  console.log("this worked 5: ✅")
+  stories.submitContribution(user_id, story_id, text) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
+  console.log("this worked 6: ✅")
+
     .then(() => res.status(200).send('Contribution submitted for approval'))
 });
 
