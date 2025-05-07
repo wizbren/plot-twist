@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-const stories = require('./db/queries/stories');
+const stories = require('../db/queries/stories');
 
 //-----------------------------GET----------------------------->
 
@@ -21,12 +21,16 @@ router.get('/contribute', (req, res) => {
   }
 
   //Database query to get all stories a user is currently making contributions on
-  stories.getInProgressStoriesByUserId(req.session['user_id'])
+  stories.getInProgressStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
+      // const templateVars = { stories }
       // res.render('contribute', templateVars);
       res.json({ message: 'Contribution page placeholder', stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error loading contribute page stories');
     });
 });
 
@@ -40,18 +44,22 @@ router.get('/read', (req, res) => {
   }
 
   //database query to get all completed stories that a user made contributions on
-  stories.getCompleteStoriesByUserId(req.session['user_id'])
+  stories.getCompletedStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
-      res.render('read', templateVars);
-      // res.json(stories);
+      // const templateVars = { stories }
+      // res.render('read', templateVars);
+      res.json({ message: 'Read page placeholder', stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error loading read page stories');
     });
 });
 
 //get specific IN PROGRESS story that user DOES NOT own
 router.get('/contribute/:story_id', (req, res) => {
-
+  const { story_id } = req.params;
   //check if logged in. RESTRICTED PERMISSION
   if (!req.session['user_id']) {
     res.redirect('/login');
@@ -59,17 +67,22 @@ router.get('/contribute/:story_id', (req, res) => {
   }
 
   //database query to get a specific story based on a specific user_id that they are contributing to
-  stories.getInProgressStoryByUserId(req.session['user_id']) //POSSIBLE BUG ‼️‼️‼️‼️‼️ maybe use story_id
+  stories.getSpecificInProgressStoryNotOwnedByUser(story_id, req.session['user_id'])
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
-      res.render('contribute_story_id', templateVars);
-      // res.json(stories);
+      // const templateVars = { stories }
+      // res.render('contribute_story_id', templateVars);
+      res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(`Error loading contribute page for story_id:${story_id}']}`);
     });
 });
 
 //get specific COMPLETE story
 router.get('/read/:story_id', (req, res) => {
+  const { story_id } = req.params;
 
   //check if logged in. RESTRICTED PERMISSION
   if (!req.session['user_id']) {
@@ -78,17 +91,23 @@ router.get('/read/:story_id', (req, res) => {
   }
 
   //database query to get a specific completed story
-  stories.getCompleteStoryByUserId(req.session['user_id'])
+  stories.getSpecificCompletedStoryById(story_id)
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
-      res.render('read_story_id', templateVars);
-      // res.json(stories);
+      // const templateVars = { stories }
+      // res.render('read_story_id', templateVars);
+      res.json({ message: `Story_id: ${story_id} read page placeholder`, stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(`Error loading read page for story_id:${story_id}`);
     });
 });
 
 //get specific story that user owns (owner_id)
 router.get('/:owner_id/:story_id', (req, res) => {
+  const { story_id } = req.params;
+  const { owner_id } = req.params;
 
   //check if logged in. RESTRICTED PERMISSION
   if (!req.session['user_id']) {
@@ -99,17 +118,22 @@ router.get('/:owner_id/:story_id', (req, res) => {
   //database query to get a specific story that a user owns
   //note, this will only matter if the story is in progress
   //completed stories will route to /read/:story_id
-  stories.getStoryByOwnerId(req.session['user_id'])
+  stories.getInProgressStoryByOwner(story_id, owner_id)
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
-      res.render('owner_id_story_id', templateVars);
-      // res.json(stories);
+      // const templateVars = { stories }
+      // res.render('owner_id_story_id', templateVars);
+      res.json({ message: `page placeholder for owner:${owner_id} story:${story_id}`, stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(`Error loading owner:${owner_id} page for story:${story_id}`);
     });
 });
 
 //get all stories that user owns (owner_id)
 router.get('/:owner_id', (req, res) => {
+  const { owner_id } = req.params;
 
   //check if logged in. RESTRICTED PERMISSION
   if (!req.session['user_id']) {
@@ -118,12 +142,16 @@ router.get('/:owner_id', (req, res) => {
   }
 
   //database query to get all stories associated with users owner_id
-  stories.getStoriesByOwnerId(req.session['user_id'])
+  stories.getStoriesByUserId(owner_id)
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
-      res.render('owners_stories', templateVars);
-      // res.json(stories);
+      // const templateVars = { stories }
+      // res.render('owners_stories', templateVars);
+      res.json({ message: `page placeholder for owner:${owner_id}`, stories });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(`Error loading stories for owner:${owner_id} page`);
     });
 });
 
