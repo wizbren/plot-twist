@@ -47,9 +47,9 @@ router.get('/read', (req, res) => {
   stories.getCompletedStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      // const templateVars = { stories }
-      // res.render('read', templateVars);
-      res.json({ message: 'Read page placeholder', stories });
+      const templateVars = { stories }
+      res.render('read-stories', templateVars);
+      //res.json({ message: 'Read page placeholder', stories });
     })
     .catch(err => {
       console.error(err);
