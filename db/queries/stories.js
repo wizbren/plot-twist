@@ -16,7 +16,7 @@ const getStoryById = (storyId) => {
     });
 };
 
-
+//------------------------------------------------> ✅✅✅
 const getStoriesByUserId = (ownerId) => {
   return db.query('SELECT * FROM stories WHERE owner_id = $1', [ownerId])
     .then((data) => {
@@ -48,6 +48,7 @@ const getInProgressStories = () => {
     });
 };
 
+//--------------------------------------------------> ✅✅✅
 /*Change the name*/
 const getInProgressStoriesNotOwnedByUser = (userId) => {
   const query = `
@@ -64,6 +65,7 @@ const getInProgressStoriesNotOwnedByUser = (userId) => {
     });
 };
 
+//--------------------------------------------------> ✅✅✅
 /*Change the name*/
 const getCompletedStoriesNotOwnedByUser = (userId) => {
   const query = `
@@ -80,6 +82,7 @@ const getCompletedStoriesNotOwnedByUser = (userId) => {
     });
 };
 
+//------------------------------------------------> ✅✅✅
 /*Change the name*/
 const getSpecificInProgressStoryNotOwnedByUser = (storyId, userId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id != $2 AND complete = false;', [storyId, userId])
@@ -88,6 +91,7 @@ const getSpecificInProgressStoryNotOwnedByUser = (storyId, userId) => {
     });
 };
 
+//------------------------------------------------> ✅✅✅
 /*Change the name???*/
 const getSpecificCompletedStoryById = (storyId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND complete = true;', [storyId])
@@ -96,7 +100,7 @@ const getSpecificCompletedStoryById = (storyId) => {
     });
 };
 
-
+//------------------------------------------------> ✅✅✅
 const getInProgressStoryByOwner = (storyId, userId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id = $2 AND complete = false;', [storyId, userId])
     .then((data) => {
@@ -105,7 +109,7 @@ const getInProgressStoryByOwner = (storyId, userId) => {
 };
 
 /* CHECK BELOW */
-
+//------------------------------------------------> ✅✅✅
 const finishStory = (story_id) => {
   const queryComplete = `
     UPDATE stories
@@ -117,7 +121,7 @@ const finishStory = (story_id) => {
     .then(result => result.rows[0]);
 };
 
-
+//------------------------------------------------> ✅✅✅
 const addInitialStoryContent = (owner_id, title, text_body) => {
   const storyQuery = `
     INSERT INTO stories (owner_id, title, text_body)
@@ -132,7 +136,7 @@ const addInitialStoryContent = (owner_id, title, text_body) => {
     });
 };
 
-
+//------------------------------------------------> ✅✅✅
 const clearPendingContributions = (story_id) => {
   const clearPending = `
     UPDATE contributions
@@ -150,7 +154,7 @@ const clearPendingContributions = (story_id) => {
 //contributor submits a paragraph and it is added to the stack of pending contributions
 const submitContribution = (user_id, story_id, text) => {
   const storyContribution = `
-  INSERT INTO contributions (user_id, story_id, text) 
+  INSERT INTO contributions (user_id, story_id, text)
     VALUES ($1, $2, $3)
     RETURNING *;
   `;                                 //Changed contribution_id in the INSERT line to user_id, to match the column in function parameter
@@ -158,7 +162,7 @@ const submitContribution = (user_id, story_id, text) => {
   .then(result => result.rows[0]);      //Changed from result.rows => result.rows[0], because it's only returning one row of data (the new contribution)
 };
 
-
+//------------------------------------------------> ✅✅✅
 const approveContribution = (contribution_id) => {
   const queryUpdateStory = `
     UPDATE stories

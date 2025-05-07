@@ -8,3 +8,5 @@ CREATE TABLE contributions (
   text TEXT NOT NULL,
   pending BOOLEAN DEFAULT TRUE
 );
+
+GRANT ALL PRIVILEGES ON TABLE contributions TO labber;
