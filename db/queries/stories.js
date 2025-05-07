@@ -50,7 +50,15 @@ const getInProgressStories = () => {
 
 /*Change the name*/
 const getInProgressStoriesNotOwnedByUser = (userId) => {
-  return db.query('SELECT * FROM stories WHERE complete = false AND owner_id != $1;', [userId])
+  const query = `
+    SELECT stories.*
+    FROM stories
+    JOIN contributions ON contributions.story_id = stories.id
+    WHERE stories.complete = false
+    AND stories.owner_id != $1
+    AND contributions.user_id = $1;
+  `;
+  return db.query(query, [userId])
     .then((data) => {
       return data.rows;
     });
@@ -58,7 +66,15 @@ const getInProgressStoriesNotOwnedByUser = (userId) => {
 
 /*Change the name*/
 const getCompletedStoriesNotOwnedByUser = (userId) => {
-  return db.query('SELECT * FROM stories WHERE owner_id != $1 AND complete = true;', [userId])
+  const query = `
+  SELECT stories.*
+  FROM stories
+  JOIN contributions ON contributions.story_id = stories.id
+  WHERE stories.complete = true
+  AND stories.owner_id != $1
+  AND contributions.user_id = $1;
+  `;
+  return db.query(query, [userId])
     .then((data) => {
       return data.rows;
     });
