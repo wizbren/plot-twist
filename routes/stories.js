@@ -24,9 +24,9 @@ router.get('/contribute', (req, res) => {
   stories.getInProgressStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      // const templateVars = { stories }
-      // res.render('contribute', templateVars);
-      res.json({ message: 'Contribution page placeholder', stories });
+      const templateVars = { stories }
+      res.render('read-contribute', templateVars);
+      //res.json({ message: 'Contribution page placeholder', stories });
     })
     .catch(err => {
       console.error(err);
