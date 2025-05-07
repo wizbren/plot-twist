@@ -145,9 +145,9 @@ router.get('/:owner_id', (req, res) => {
   stories.getStoriesByUserId(owner_id)
     .then((stories) => {
       //render results of query
-      // const templateVars = { stories }
-      // res.render('owners_stories', templateVars);
-      res.json({ message: `page placeholder for owner:${owner_id}`, stories });
+      const templateVars = { stories }
+      res.render('owner-page', templateVars);
+      //res.json({ message: `page placeholder for owner:${owner_id}`, stories });
     })
     .catch(err => {
       console.error(err);
