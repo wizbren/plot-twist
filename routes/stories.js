@@ -92,11 +92,11 @@ router.get('/read/:story_id', (req, res) => {
 
   //database query to get a specific completed story
   stories.getSpecificCompletedStoryById(story_id)
-    .then((stories) => {
+    .then((story) => {
       //render results of query
-      // const templateVars = { stories }
-      // res.render('read_story_id', templateVars);
-      res.json({ message: `Story_id: ${story_id} read page placeholder`, stories });
+      const templateVars = { story };
+      res.render('read-story', templateVars); //ejs file we want to render this data to
+      // res.json({ message: `Story_id: ${story_id} read page placeholder`, story });
     })
     .catch(err => {
       console.error(err);

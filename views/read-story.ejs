@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read a Story</title>
+  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+</head>
+
+<body>
+  <nav>
+    <%- include('partials/navBar') %>
+  </nav>
+
+  <header>
+    <%- include('partials/header') %>
+  </header>
+
+  <div class="container">
+    <main class="story-view">
+      <div class="story-header">
+        <span class="author-name"><%= story.owner_id %></span>
+        <h2 class="story-title"><%= story.title %></h2>
+        <div class="like-dots">
+          <span class="likes">❤️ <%= story.likes || 0 %></span>
+        </div>
+      </div>
+      <div class="story-body">
+        <img src="<%= story.user_image %>" alt="User Image" class="story-user-image" />
+        <p><%= story.text_body %></p>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>
