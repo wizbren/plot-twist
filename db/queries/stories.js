@@ -16,7 +16,7 @@ const getStoryById = (storyId) => {
     });
 };
 
-
+//------------------------------------------------> ✅✅✅ 
 const getStoriesByUserId = (ownerId) => {
   return db.query('SELECT * FROM stories WHERE owner_id = $1', [ownerId])
     .then((data) => {
@@ -48,6 +48,7 @@ const getInProgressStories = () => {
     });
 };
 
+//-------------------------------------------------->and user is contributor vvv
 /*Change the name*/
 const getInProgressStoriesNotOwnedByUser = (userId) => {
   return db.query('SELECT * FROM stories WHERE complete = false AND owner_id != $1;', [userId])
@@ -56,6 +57,7 @@ const getInProgressStoriesNotOwnedByUser = (userId) => {
     });
 };
 
+//-------------------------------------------------->and user is contributor vvv
 /*Change the name*/
 const getCompletedStoriesNotOwnedByUser = (userId) => {
   return db.query('SELECT * FROM stories WHERE owner_id != $1 AND complete = true;', [userId])
@@ -64,6 +66,7 @@ const getCompletedStoriesNotOwnedByUser = (userId) => {
     });
 };
 
+//------------------------------------------------> ✅✅✅
 /*Change the name*/
 const getSpecificInProgressStoryNotOwnedByUser = (storyId, userId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id != $2 AND complete = false;', [storyId, userId])
@@ -72,6 +75,7 @@ const getSpecificInProgressStoryNotOwnedByUser = (storyId, userId) => {
     });
 };
 
+//------------------------------------------------> ✅✅✅
 /*Change the name???*/
 const getSpecificCompletedStoryById = (storyId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND complete = true;', [storyId])
@@ -80,7 +84,7 @@ const getSpecificCompletedStoryById = (storyId) => {
     });
 };
 
-
+//------------------------------------------------> ✅✅✅
 const getInProgressStoryByOwner = (storyId, userId) => {
   return db.query('SELECT * FROM stories WHERE id = $1 AND owner_id = $2 AND complete = false;', [storyId, userId])
     .then((data) => {
