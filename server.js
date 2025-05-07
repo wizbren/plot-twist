@@ -5,6 +5,8 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
+const stories = require('./db/queries/stories');
+
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -57,18 +59,20 @@ app.get('/', (req, res) => {
     return;
   }
 
-  stories.getFrontpageStories(req.session['user_id'])
+  stories.getAllStories()
     .then((stories) => {
+      // console.log(stories);
       //render results of query
       // const templateVars = { stories }
       // res.render('stories', templateVars);
-      res.json({ message: 'front page placeholder', stories });
+      res.json({ message: 'front page placeholder', stories});
     })
     .catch(err => {
       console.error(err);
       res.status(500).send('Error loading front page stories');
     });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

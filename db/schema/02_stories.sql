@@ -8,3 +8,5 @@ CREATE TABLE stories (
   text_body TEXT,
   complete BOOLEAN DEFAULT FALSE
 );
+
+GRANT ALL PRIVILEGES ON TABLE stories TO labber;

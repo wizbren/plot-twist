@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-// const storyQueries = require('../db/queries/storyQueries')
+const stories = require('./db/queries/stories');
 
 //-----------------------------GET----------------------------->
 
@@ -21,7 +21,7 @@ router.get('/contribute', (req, res) => {
   }
 
   //Database query to get all stories a user is currently making contributions on
-  storyQueries.getInProgressStoriesByUserId(req.session['user_id'])
+  stories.getInProgressStoriesByUserId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -40,7 +40,7 @@ router.get('/read', (req, res) => {
   }
 
   //database query to get all completed stories that a user made contributions on
-  storyQueries.getCompleteStoriesByUserId(req.session['user_id'])
+  stories.getCompleteStoriesByUserId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -59,7 +59,7 @@ router.get('/contribute/:story_id', (req, res) => {
   }
 
   //database query to get a specific story based on a specific user_id that they are contributing to
-  storyQueries.getInProgressStoryByUserId(req.session['user_id']) //POSSIBLE BUG ‼️‼️‼️‼️‼️ maybe use story_id
+  stories.getInProgressStoryByUserId(req.session['user_id']) //POSSIBLE BUG ‼️‼️‼️‼️‼️ maybe use story_id
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -78,7 +78,7 @@ router.get('/read/:story_id', (req, res) => {
   }
 
   //database query to get a specific completed story
-  storyQueries.getCompleteStoryByUserId(req.session['user_id'])
+  stories.getCompleteStoryByUserId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -99,7 +99,7 @@ router.get('/:owner_id/:story_id', (req, res) => {
   //database query to get a specific story that a user owns
   //note, this will only matter if the story is in progress
   //completed stories will route to /read/:story_id
-  storyQueries.getStoryByOwnerId(req.session['user_id'])
+  stories.getStoryByOwnerId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -118,7 +118,7 @@ router.get('/:owner_id', (req, res) => {
   }
 
   //database query to get all stories associated with users owner_id
-  storyQueries.getStoriesByOwnerId(req.session['user_id'])
+  stories.getStoriesByOwnerId(req.session['user_id'])
     .then((stories) => {
       //render results of query
       const templateVars = { stories }
@@ -139,7 +139,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
 
   // If it's the initial contribution
   if (title && text_body) {
-    return storyQueries.addInitialStoryContent(owner_id, story_id, title, text_body) // this query needs to initialise a story with the data here
+    return stories.addInitialStoryContent(owner_id, story_id, title, text_body) // this query needs to initialise a story with the data here
       .then(() => {
         res.redirect(`/${owner_id}/${story_id}`)
       })
@@ -148,9 +148,9 @@ router.post('/:owner_id/:story_id', (req, res) => {
 
   // If the owner approves a contribution
   if (action === 'approve') {
-    return storyQueries.approveContribution(contribution_id, story_id) //this query needs to append the existing story at the passed story id and add contribution id
+    return stories.approveContribution(contribution_id, story_id) //this query needs to append the existing story at the passed story id and add contribution id
       .then(() => {
-        return storyQueries.clearPendingContributions(story_id) //query must switch all booleans to false for all pending contributions in datatable
+        return stories.clearPendingContributions(story_id) //query must switch all booleans to false for all pending contributions in datatable
       })
       .then(() => {
         res.redirect(`/${owner_id}/${story_id}`)
@@ -159,7 +159,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
 
   // If the owner finishes the story
   if (action === 'finish') {
-    return storyQueries.finishStory(story_id) //this query should switch is complete boolean to true
+    return stories.finishStory(story_id) //this query should switch is complete boolean to true
       .then(() => {
         res.redirect(`/${owner_id}/${story_id}`)
       })
@@ -181,7 +181,7 @@ router.post('/contribute/:story_id', (req, res) => {
     return res.status(400).send('No paragraph submitted');
   }
 
-  storyQueries.submitContribution(user_id, story_id, text_body) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
+  stories.submitContribution(user_id, story_id, text_body) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
     .then(() => res.status(200).send('Contribution submitted for approval'))
 });
 

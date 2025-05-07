@@ -134,7 +134,7 @@ const clearPendingContributions = (story_id) => {
 //contributor submits a paragraph and it is added to the stack of pending contributions
 const submitContribution = (user_id, story_id, text) => {
   const storyContribution = `
-  INSERT INTO contributions (user_id, story_id, text) 
+  INSERT INTO contributions (user_id, story_id, text)
     VALUES ($1, $2, $3)
     RETURNING *;
   `;                                 //Changed contribution_id in the INSERT line to user_id, to match the column in function parameter

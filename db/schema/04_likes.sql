@@ -7,5 +7,5 @@ CREATE TABLE likes (
   PRIMARY KEY (user_id, contribution_id)
 );
 
-
+GRANT ALL PRIVILEGES ON TABLE likes TO labber;
 /*Is a "composite primary key" the right move here?*/

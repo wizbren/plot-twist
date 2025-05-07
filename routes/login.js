@@ -14,8 +14,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
 
   //if logged in --->redirect from /register ---> /urls
-  if (req.session["userId"] !== undefined) {
-    res.redirect("/");
+  if (req.session['user_id'] !== undefined) {
+    res.redirect('/');
     return;
   }
 
