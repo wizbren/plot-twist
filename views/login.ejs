@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+
+<body>
+
+  <!--Navigation Bar Partial-->
+  <%- include('partials/_navBar') %>
+
+  <main>
+    <h1>LOGIN</h1>
+
+    <div>
+      <form method="POST" action="/login">
+        <button type="submit" name="user_id" value="1">User 1</button>
+      </form>
+
+      <form method="POST" action="/login">
+        <button type="submit" name="user_id" value="2">User 2</button>
+      </form>
+
+      <form method="POST" action="/login">
+        <button type="submit" name="user_id" value="3">User 3</button>
+      </form>
+    </div>
+
+  </main>
+  
+</body>
+
+</html>
