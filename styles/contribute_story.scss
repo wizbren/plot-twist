@@ -1,0 +1,22 @@
+@import 'variables';
+@import 'header';
+@import 'navBar';
+@import 'story_cards';
+
+
+.page-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2em;
+  background-color: $background;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
