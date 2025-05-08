@@ -4,90 +4,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contribute To A Story</title>
-  <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+  <title>Write YOUR Story</title>
+  <link rel="stylesheet" href="/styles/owner_create_story.css" />
 </head>
 
 <body>
-  <nav>
-    <%- include('partials/_navBar', { pageTitle: 'Contribute to Story' }) %>
-  </nav>
+  <%- include('partials/_navBar', { pageTitle: 'Write YOUR Story' }) %>
 
-  <header>
-    <%- include('partials/_header') %>
-  </header>
+    <div class="page-layout">
+      <!--Profile Bar/header partial-->
+      <%- include('partials/_header') %>
 
-  <main class="main-content">
-    <!-- Original Story Block -->
-    <% if (!story.title || !story.text_body) { %>
-      <section class="initial-submission">
-        <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
-          <input type="text" name="title" placeholder="Enter a title for your story" required />
-          <textarea name="text_body" placeholder="Start your story..." required></textarea>
-          <button type="submit">Start Story</button>
-        </form>
-      </section>
-      <% } else { %>
-        <section class="story-block owner-story">
-          <div class="story-header">
-            <div class="user-info">
-              <img src="<%= story.user_image %>" alt="User Image" class="avatar" />
-              <span class="author-name">
-                <%= story.owner_id %>
-              </span>
-            </div>
-            <div class="story-meta">
-              <h2 class="story-title">
-                <%= story.title %>
-              </h2>
-              <span class="likes">❤️ <%= story.likes || 0 %></span>
-            </div>
-          </div>
-          <p class="story-body">
-            <%= story.text_body %>
-          </p>
-        </section>
+        <main class="main-content">
 
-        <!-- Form to finish a post and change boolean -->
-        <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
-          <input type="hidden" name="action" value="finish" />
-          <button type="submit">Finish Story</button>
-        </form>
+          <!-- Original Story Block -->
+          <% if (!story.title || !story.text_body) { %>
+            <section class="initial-submission">
+              <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+                <input type="text" name="title" placeholder="Enter a title for your story" required />
+                <textarea name="text_body" placeholder="Start your story..." required></textarea>
+                <button type="submit" class="form-btn">Start Story</button>
+              </form>
+            </section>
+            <% } else { %>
 
-        <!-- Submitted Contributions -->
-        <section class="contributions">
-          <% if (contributions && contributions.length) { %>
-            <% contributions.forEach(contribution=> { %>
-              <div class="story-block contribution">
-                <div class="story-header">
+              <!-- Finish story button -->
+              <div class="owner-story-wrapper">
+                <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+                  <input type="hidden" name="action" value="finish" />
+                  <button type="submit" class="finish-btn">✓ Finish</button>
+                </form>
+
+                <!-- Story owner card -->
+                <section class="story-card owner-story">
+                  <!-- Left column: user info -->
                   <div class="user-info">
-                    <img src="<%= contribution.user_image %>" alt="User Image" class="avatar" />
+                    <img src="<%= story.user_image %>" alt="User Image" class="avatar" />
                     <span class="author-name">
-                      <%= contribution.user_id %>
+                      <%= story.owner_id %>
                     </span>
                   </div>
-                  <div class="story-meta">
-                    <h3 class="story-title">Contribution</h3>
+
+                  <!-- Right column: story content -->
+                  <div class="story-content">
+                    <!-- Title centered at the top -->
+                    <div class="story-header-row">
+                      <h2 class="story-title"><%= story.title %></h2>
+                      <span class="likes">❤️ <%= story.likes || 0 %></span>
+                    </div>
+
+
+                    <p class="story-body">
+                      <%= story.text_body %>
+                    </p>
                   </div>
-                </div>
-                <p class="story-body">
-                  <%= contribution.text %>
-                </p>
-                <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
-                  <input type="hidden" name="contribution_id" value="<%= contribution.id %>" />
-                  <input type="hidden" name="action" value="approve" />
-                  <button type="submit">Approve</button>
-                </form>
+                </section>
+
+
               </div>
-              <% }) %>
-                <% } else { %>
-                  <p>No pending contributions yet.</p>
-                  <% } %>
-        </section>
-        <% } %>
-  </main>
-  </div>
+
+              <!-- Submitted Contributions -->
+              <section class="contributions">
+                <% if (contributions && contributions.length) { %>
+                  <% contributions.forEach(contribution=> { %>
+                    <div class="contribution-wrapper">
+                      <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+                        <input type="hidden" name="contribution_id" value="<%= contribution.id %>" />
+                        <input type="hidden" name="action" value="approve" />
+                        <button type="submit" class="form-btn approve-btn">✓ Approve</button>
+                      </form>
+                      <div class="story-card contribution">
+                        <div class="story-header">
+                          <div class="user-info">
+                            <img src="<%= contribution.user_image %>" alt="User Image" class="avatar" />
+                            <span class="author-name">
+                              <%= contribution.user_id %>
+                            </span>
+                          </div>
+                        </div>
+                        <p class="story-body">
+                          <%= contribution.text %>
+                        </p>
+                      </div>
+                    </div>
+                    <% }) %>
+                      <% } else { %>
+                        <p>No pending contributions yet.</p>
+                        <% } %>
+              </section>
+              <% } %>
+        </main>
+    </div>
 </body>
 
 </html>
