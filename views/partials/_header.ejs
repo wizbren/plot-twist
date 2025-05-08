@@ -10,9 +10,9 @@
 
   <!--Three navigation buttons-->
   <nav class="profile-buttons">
-    <button type="button" class="btn btn-primary" onclick="location.href='$YOUR-STORIES$'">Your Stories</button>
-    <button type="button" class="btn btn-primary" onclick="location.href='$CONTRIBUTION-STORIES$'">Contribution Stories</button>
-    <button type="button" class="btn btn-primary" onclick="location.href='$CREATE-STORY$'">Create Story</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/stories/<%= userId %>'">Create</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/stories/contribute'">Contribute</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/stories/read'">Read</button>
   </nav>
 
 </aside>
