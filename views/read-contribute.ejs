@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Plot-Twist - Unowned In-Progress Stories</title>
   <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+  <link rel="stylesheet" href="/styles/stories_contribute.css" />
 </head>
 
 <body>
@@ -23,26 +23,28 @@
 
           <section class="user-story-row">
             <% stories.forEach(story=> { %>
-              <div class="user-box">
-                <p class="username">
-                  <%= story.owner_id %>
-                </p>
-                <img src="$PLACEHOLDER$" alt="UserOne's Profile Pic">
-              </div>
-              <div class="story-box">
-                <div class="story-title">
-                  <h3>
-                    <%= story.title %>
-                  </h3>
-                  <div class="story-buttons">
-                    <button>LIKE</button>
-                    <button>EDIT</button>
-                    <button>DELETE</button>
-                  </div>
+              <div class="story-card">
+                <div class="user-info">
+                  <img src="$PLACEHOLDER$" alt="UserOne's Profile Pic">
+                  <p class="username">
+                    <%= story.owner_id %>
+                  </p>
                 </div>
-                <p class="story-text">
-                  <%= story.text_body %>
-                </p>
+                <div class="story-content">
+                  <div class="story-title">
+                    <h3>
+                      <%= story.title %>
+                    </h3>
+                    <div class="story-buttons">
+                      <button>LIKE</button>
+                      <button>EDIT</button>
+                      <button>DELETE</button>
+                    </div>
+                  </div>
+                  <p class="story-text">
+                    <%= story.text_body %>
+                  </p>
+                </div>
               </div>
               <% }); %>
           </section>

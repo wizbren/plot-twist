@@ -1,7 +1,6 @@
 @import "variables";
 @import "header";
 @import "story_cards";
-@import 'navBar';
 
 .page-layout {
   display: flex;
@@ -35,3 +34,4 @@
     background-color: darken($primary, 10%);
   }
 }
+
