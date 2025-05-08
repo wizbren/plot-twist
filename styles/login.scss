@@ -1,0 +1,40 @@
+@import 'variables';
+
+.login-container {
+  background-color: $background;
+  color: $text;
+  font-family: $font-base;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+
+  .login-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: $primary;
+  }
+
+  .login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    form {
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        background-color: $primary;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken($primary, 10%);
+        }
+      }
+    }
+  }
+}

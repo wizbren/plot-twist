@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+  <link rel="stylesheet" href="/styles/read.css" />
 </head>
 
 <body>
@@ -13,22 +13,22 @@
   <!--Navigation Bar Partial-->
   <%- include('partials/_navBar') %>
 
-  <main>
-    <h1>LOGIN</h1>
+    <main class="login-container">
+      <h1 class="login-title">LOGIN</h1>
 
-    <div>
-      <form method="POST" action="/login">
-        <button type="submit" name="user_id" value="1">User 1</button>
-      </form>
+      <div class="login-buttons">
 
-      <form method="POST" action="/login">
-        <button type="submit" name="user_id" value="2">User 2</button>
-      </form>
-
-      <form method="POST" action="/login">
-        <button type="submit" name="user_id" value="3">User 3</button>
-      </form>
-    </div>
+        <form action="/login/1" method="get">
+          <button class="btn" type="submit">User 1</button>
+        </form>
+        <form action="/login/2" method="get">
+          <button class="btn" type="submit">User 2</button>
+        </form>
+        <form action="/login/3" method="get">
+          <button class="btn" type="submit">User 3</button>
+        </form>
+      </div>
+    </main>
 
   </main>
 
