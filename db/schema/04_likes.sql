@@ -8,4 +8,3 @@ CREATE TABLE likes (
 );
 
 GRANT ALL PRIVILEGES ON TABLE likes TO labber;
-/*Is a "composite primary key" the right move here?*/
