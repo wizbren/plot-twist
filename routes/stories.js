@@ -24,7 +24,7 @@ router.get('/contribute', (req, res) => {
   stories.getInProgressStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
+      const templateVars = { stories, userId: req.session.user_id };
       res.render('read-contribute', templateVars);
       //res.json({ message: 'Contribution page placeholder', stories });
     })
@@ -47,7 +47,7 @@ router.get('/read', (req, res) => {
   stories.getCompletedStoriesNotOwnedByUser(req.session['user_id'])
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
+      const templateVars = { stories, userId: req.session.user_id };
       res.render('read-stories', templateVars);
       //res.json({ message: 'Read page placeholder', stories });
     })
@@ -71,7 +71,7 @@ router.get('/contribute/:story_id', (req, res) => {
     .then((story) => {
       console.log(story);
       //render results of query
-      const templateVars = { story }
+      const templateVars = { stories, userId: req.session.user_id };
       res.render('contribute-story', templateVars);
       // res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
     })
@@ -95,7 +95,7 @@ router.get('/read/:story_id', (req, res) => {
   stories.getSpecificCompletedStoryById(story_id)
     .then((story) => {
       //render results of query
-      const templateVars = { story };
+      const templateVars = { stories, userId: req.session.user_id };
       res.render('read-story', templateVars); //ejs file we want to render this data to
       // res.json({ message: `Story_id: ${story_id} read page placeholder`, story });
     })
@@ -124,6 +124,7 @@ router.get('/:owner_id/:story_id', (req, res) => {
       return stories.getPendingContributionsByStoryId(story_id) //i will likely need this is more than one view
       .then((contributions) => {
         const templateVars = {
+          userId: req.session.user_id, //user id for header (would be bette as username)
           story,           // single story object
           contributions    // array of contribution objects
         };
@@ -151,7 +152,7 @@ router.get('/:owner_id', (req, res) => {
   stories.getStoriesByUserId(owner_id)
     .then((stories) => {
       //render results of query
-      const templateVars = { stories }
+      const templateVars = { stories, userId: req.session.user_id };
       res.render('owner-page', templateVars);
       //res.json({ message: `page placeholder for owner:${owner_id}`, stories });
     })
