@@ -184,6 +184,21 @@ const approveContribution = (contribution_id) => {
 };
 
 
+// Get all pending contributions for a story by story id
+const getPendingContributionsByStoryId = (story_id) => {
+  const query = `
+  SELECT contributions.*, users.name
+  FROM contributions
+  JOIN users ON users.id = contributions.user_id
+  WHERE contributions.story_id = $1
+  AND contributions.pending = true;
+  `;
+  return db.query(query, [story_id])
+    .then((result) => result.rows);
+};
+
+
+
 module.exports = {
   getAllStories,
   getStoryById,
@@ -200,23 +215,6 @@ module.exports = {
   addInitialStoryContent,
   clearPendingContributions,
   submitContribution,
-  approveContribution
+  approveContribution,
+  getPendingContributionsByStoryId
 };
-
-// const query = `
-// UPDATE stories
-// SET text_body = stories.text_body || ' ' || contributions.text
-// FROM contributions
-// WHERE contributions.id = $1
-//   AND stories.id = contributions.story_id
-// RETURNING stories.*;
-// `;
-
-//`
-//UPDATE text_body
-//SELECT CONCAT(stories.text_body, ' ', contributions.text)
-//FROM stories
-//JOIN contributions ON story_id = stories.id
-//WHERE contributions.id = $1
-//RETURNING *;
-//`;
