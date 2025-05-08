@@ -6,71 +6,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contribute To A Story</title>
   <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+  <link rel="stylesheet" href="/styles/contribute_story.css" />
 </head>
 
 <body>
-  <nav>
-    <%- include('partials/_navBar', { pageTitle: 'Contribute To A Story' }) %>
-  </nav>
 
-  <header>
+  <%- include('partials/_navBar', { pageTitle: 'Contribute To A Story' }) %>
+
+  <div class="page-layout">
+
     <%- include('partials/_header') %>
-  </header>
 
-  <main class="main-content">
-    <!-- Original Story Block -->
-    <section class="story-block owner-story">
-      <div class="story-header">
+    <main class="main-content">
+
+      <!-- Original Story -->
+      <div class="story-card">
         <div class="user-info">
-          <img src="<%= story.user_image %>" alt="User Image" class="avatar" />
-          <span class="author-name">
-            <%= story.owner_id %>
-          </span>
+          <img src="<%= story.user_image %>" alt="User Image">
+          <p class="username">User <%= story.owner_id %></p>
         </div>
-        <div class="story-meta">
-          <h2 class="story-title">
-            <%= story.title %>
-          </h2>
-          <span class="likes">❤️ <%= story.likes || 0 %></span>
+        <div class="story-content">
+          <div class="story-title">
+            <h3><%= story.title %></h3>
+            <span class="likes">❤️ <%= story.likes || 0 %></span>
+          </div>
+          <p class="story-text"><%= story.text_body %></p>
         </div>
       </div>
-      <p class="story-body">
-        <%= story.text_body %>
-      </p>
-    </section>
 
-    <!-- Contribution Form -->
-    <form action="/stories/contribute/<%= story.id %>" method="POST" class="contribution-form">
-      <textarea name="text" placeholder="Write your contribution here..." required></textarea>
-      <button type="submit">Submit</button>
-    </form>
+      <!-- Contribution Form -->
+      <form action="/stories/contribute/<%= story.id %>" method="POST" class="contribution-form">
+        <textarea name="text" placeholder="Write your contribution here..." required></textarea>
+        <button type="submit">Submit</button>
+      </form>
 
-    <!-- Submitted Contributions -->
-    <section class="contributions">
-      <% if (story && story.length) { %>
-        <% story.forEach(contribution=> { %>
-          <div class="story-block contribution">
-            <div class="story-header">
-              <div class="user-info">
-                <img src="<%= contribution.user_image %>" alt="User Image" class="avatar" />
-                <span class="author-name">
-                  <%= contribution.username %>
-                </span>
-              </div>
-              <div class="story-meta">
-                <h3 class="story-title">Contribution</h3>
-              </div>
+      <!-- Submitted Contributions -->
+      <% if (contributions && contributions.length) { %>
+        <% contributions.forEach(contribution => { %>
+          <div class="story-card">
+            <div class="user-info">
+              <img src="<%= contribution.user_image %>" alt="User Image">
+              <p class="username"><%= contribution.username %></p>
             </div>
-            <p class="story-body">
-              <%= contribution.text %>
-            </p>
+            <div class="story-content">
+              <div class="story-title">
+                <h3>Contribution</h3>
+              </div>
+              <p class="story-text"><%= contribution.text %></p>
+            </div>
           </div>
-          <% }) %>
-            <% } %>
-    </section>
-  </main>
-  </div>
-</body>
+        <% }) %>
+      <% } %>
 
+    </main>
+  </div>
+
+</body>
 </html>
