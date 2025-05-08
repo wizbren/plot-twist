@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Read a Story</title>
   <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+  <link rel="stylesheet" href="/styles/read-story_id.css" />
 </head>
 
 <body>
-  <nav>
-    <%- include('partials/_navBar', { pageTitle: 'Read a Story' }) %>
-  </nav>
 
-  <header>
+  <%- include('partials/_navBar', { pageTitle: 'Read a Story' }) %>
+
+  <!-- Page layout wrapper -->
+  <div class="page-layout">
+
     <%- include('partials/_header') %>
-  </header>
 
-  <div class="container">
-    <main class="story-view">
+    <!-- Main content area -->
+    <main class="main-content">
       <div class="story-header">
         <span class="author-name"><%= story.owner_id %></span>
         <h2 class="story-title"><%= story.title %></h2>
@@ -32,6 +32,7 @@
         <p><%= story.text_body %></p>
       </div>
     </main>
+
   </div>
 </body>
 
