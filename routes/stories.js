@@ -121,7 +121,7 @@ router.get('/:owner_id/:story_id', (req, res) => {
   //completed stories will route to /read/:story_id
   stories.getInProgressStoryByOwner(story_id, owner_id)
     .then((story) => {
-      return stories.getPendingContributions(story_id) //i will likely need this is more than one view
+      return stories.getPendingContributionsByStoryId(story_id) //i will likely need this is more than one view
       .then((contributions) => {
         const templateVars = {
           story,           // single story object
