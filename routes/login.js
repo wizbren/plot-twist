@@ -19,8 +19,8 @@ router.get('/', (req, res) => {
     return;
   }
 
-  // res.render('login');
-  res.json({ message: 'Login page placeholder' });
+  res.render('login');
+  //res.json({ message: 'Login page placeholder' });
 });
 
 //button click gets login route for specific user clicked based off of id
