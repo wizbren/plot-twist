@@ -71,7 +71,7 @@ router.get('/contribute/:story_id', (req, res) => {
     .then((story) => {
       console.log(story);
       //render results of query
-      const templateVars = { stories, userId: req.session.user_id };
+      const templateVars = { story, userId: req.session.user_id };
       res.render('contribute-story', templateVars);
       // res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
     })
