@@ -60,24 +60,29 @@ router.get('/read', (req, res) => {
 //get specific IN PROGRESS story that user DOES NOT own
 router.get('/contribute/:story_id', (req, res) => {
   const { story_id } = req.params;
-  //check if logged in. RESTRICTED PERMISSION
+
   if (!req.session['user_id']) {
     res.redirect('/login');
     return;
   }
-
-  //database query to get a specific story based on a specific user_id that they are contributing to
+//database query to get a specific story based on a specific user_id that they are contributing to
   stories.getSpecificInProgressStoryNotOwnedByUser(story_id, req.session['user_id'])
     .then((story) => {
       console.log(story);
-      //render results of query
-      const templateVars = { story, userId: req.session.user_id };
-      res.render('contribute-story', templateVars);
-      // res.json({ message: `Story_id: ${story_id} contribute page placeholder`, stories });
+
+      return stories.getPendingContributionsByStoryId(story_id)
+        .then((contributions) => {
+          const templateVars = {
+            story,
+            contributions,
+            userId: req.session.user_id
+          };
+          res.render('contribute-story', templateVars);
+        });
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send(`Error loading contribute page for story_id:${story_id}']}`);
+      res.status(500).send(`Error loading contribute page for story_id:${story_id}`);
     });
 });
 
