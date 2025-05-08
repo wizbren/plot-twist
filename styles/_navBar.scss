@@ -1,0 +1,25 @@
+@import 'variables';
+
+
+.navigation-bar {
+  background-color: $primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  .logo {       //Targets the logo             
+    img {       //This targets the img in the logo (the scroll)
+      height: 100px;
+    }
+  }
+
+  .page-title {
+    text-align: center;
+    flex-grow: 1;
+  }
+
+  .nav-bar-buttons {
+    //Potentially change from bootstrap buttons to SASS styled
+  }
+}
