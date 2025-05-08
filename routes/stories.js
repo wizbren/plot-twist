@@ -120,11 +120,16 @@ router.get('/:owner_id/:story_id', (req, res) => {
   //note, this will only matter if the story is in progress
   //completed stories will route to /read/:story_id
   stories.getInProgressStoryByOwner(story_id, owner_id)
-    .then((stories) => {
-      //render results of query
-      // const templateVars = { stories }
-      // res.render('owner_id_story_id', templateVars);
-      res.json({ message: `page placeholder for owner:${owner_id} story:${story_id}`, stories });
+    .then((story) => {
+      return stories.getPendingContributions(story_id) //i will likely need this is more than one view
+      .then((contributions) => {
+        const templateVars = {
+          story,           // single story object
+          contributions    // array of contribution objects
+        };
+        res.render('owner-page-create', templateVars);
+      });
+      // res.json({ message: `page placeholder for owner:${owner_id} story:${story_id}`, story });
     })
     .catch(err => {
       console.error(err);

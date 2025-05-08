@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>contribute To A Story</title>
+  <!-- <link rel="stylesheet" href="/styles/read.css" /> -->
+</head>
+
+<body>
+  <nav>
+    <%- include('partials/_navBar') %>
+  </nav>
+
+  <header>
+    <%- include('partials/_header') %>
+  </header>
+
+  <main class="main-content">
+    <!-- Original Story Block -->
+    <% if (!story.title || !story.text_body) { %>
+      <section class="initial-submission">
+        <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+          <input type="text" name="title" placeholder="Enter a title for your story" required />
+          <textarea name="text_body" placeholder="Start your story..." required></textarea>
+          <button type="submit">Start Story</button>
+        </form>
+      </section>
+      <% } else { %>
+        <section class="story-block owner-story">
+          <div class="story-header">
+            <div class="user-info">
+              <img src="<%= story.user_image %>" alt="User Image" class="avatar" />
+              <span class="author-name">
+                <%= story.owner_id %>
+              </span>
+            </div>
+            <div class="story-meta">
+              <h2 class="story-title">
+                <%= story.title %>
+              </h2>
+              <span class="likes">❤️ <%= story.likes || 0 %></span>
+            </div>
+          </div>
+          <p class="story-body">
+            <%= story.text_body %>
+          </p>
+        </section>
+
+        <!-- Form to finish a post and change boolean -->
+        <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+          <input type="hidden" name="action" value="finish" />
+          <button type="submit">Finish Story</button>
+        </form>
+
+        <!-- Submitted Contributions -->
+        <section class="contributions">
+          <% if (contributions && contributions.length) { %>
+            <% contributions.forEach(contribution=> { %>
+              <div class="story-block contribution">
+                <div class="story-header">
+                  <div class="user-info">
+                    <img src="<%= contribution.user_image %>" alt="User Image" class="avatar" />
+                    <span class="author-name">
+                      <%= contribution.user_id %>
+                    </span>
+                  </div>
+                  <div class="story-meta">
+                    <h3 class="story-title">Contribution</h3>
+                  </div>
+                </div>
+                <p class="story-body">
+                  <%= contribution.text %>
+                </p>
+                <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+                  <input type="hidden" name="contribution_id" value="<%= contribution.id %>" />
+                  <input type="hidden" name="action" value="approve" />
+                  <button type="submit">Approve</button>
+                </form>
+              </div>
+              <% }) %>
+                <% } else { %>
+                  <p>No pending contributions yet.</p>
+                  <% } %>
+        </section>
+        <% } %>
+  </main>
+  </div>
+</body>
+
+</html>
