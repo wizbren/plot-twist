@@ -95,7 +95,7 @@ router.get('/read/:story_id', (req, res) => {
   stories.getSpecificCompletedStoryById(story_id)
     .then((story) => {
       //render results of query
-      const templateVars = { stories, userId: req.session.user_id };
+      const templateVars = { story, userId: req.session.user_id };
       res.render('read-story', templateVars); //ejs file we want to render this data to
       // res.json({ message: `Story_id: ${story_id} read page placeholder`, story });
     })
