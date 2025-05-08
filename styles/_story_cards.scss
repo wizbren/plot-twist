@@ -1,0 +1,79 @@
+.user-story-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.story-card {
+  display: flex;
+  background-color: $secondary;
+  color: white;
+  border-radius: 1em;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  flex: 0 0 150px; // fixed width for sidebar chunk
+  background-color: darken($secondary, 5%);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: lighten($secondary, 20%);
+  }
+
+  .username {
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+.story-content {
+  flex: 1;
+  padding: 1.5em;
+
+  .story-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .story-buttons {
+      display: flex;
+      gap: 0.5em;
+
+      button {
+        background-color: white;
+        color: $secondary;
+        border: none;
+        padding: 0.4em 0.8em;
+        border-radius: 0.5em;
+        cursor: pointer;
+        font-weight: bold;
+
+        &:hover {
+          background-color: lighten($secondary, 15%);
+        }
+      }
+    }
+  }
+
+  .story-text {
+    margin-top: 1em;
+    font-size: 1em;
+    line-height: 1.4;
+  }
+}

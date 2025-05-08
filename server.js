@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
     .then((stories) => {
       // console.log(stories);
       //render results of query
-      const templateVars = { stories };
+      const templateVars = { stories, userId: req.session.user_id };
       console.log(templateVars);
       res.render('index', templateVars);
       //res.json({ message: 'front page placeholder', stories});
