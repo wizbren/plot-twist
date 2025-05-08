@@ -8,8 +8,11 @@
   align-items: center;
   padding: 10px;
 
-  .logo {       //Targets the logo             
-    img {       //This targets the img in the logo (the scroll)
+  .logo {
+
+    //Targets the logo             
+    img {
+      //This targets the img in the logo (the scroll)
       height: 100px;
     }
   }
@@ -20,6 +23,21 @@
   }
 
   .nav-bar-buttons {
-    //Potentially change from bootstrap buttons to SASS styled
+    display: flex;
+    gap: 1em;
+
+    .nav-btn {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      background-color: $secondary;
+      color: $background;
+      border: none;
+      border-radius: 0.5em;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($secondary, 10%);
+      }
+    }
   }
 }
