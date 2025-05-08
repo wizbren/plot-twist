@@ -1,0 +1,35 @@
+.owner-story-wrapper {
+  display: flex;
+  gap: 1em;
+  align-items: stretch;
+  margin-bottom: 2em;
+
+  form {
+    flex: 0 0 50px;
+
+    .finish-btn {
+      width: 6em;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.4em;
+      font-size: 0.85em;
+      font-weight: bold;
+      background-color: $accent;
+      border: 2px solid black;
+      border-radius: 0.5em;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: darken($accent, 10%);
+      }
+    }
+  }
+
+  .story-card.owner-story {
+    flex: 1;
+  }
+}
