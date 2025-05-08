@@ -1,0 +1,62 @@
+@import 'variables';
+@import 'header';
+@import 'navBar';
+@import 'story_cards';
+
+
+.page-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2em;
+  background-color: $background;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.contribution-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background-color: $secondary;
+  color: white;
+  padding: 1.5em;
+  border-radius: 1em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 1em;
+    font-size: 1em;
+    border: none;
+    border-radius: 0.5em;
+    resize: vertical;
+    font-family: $font-base;
+    background-color: lightblue;
+    color: white;
+  }
+
+  button {
+    align-self: flex-end;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    background-color: white;
+    color: $secondary;
+    border: none;
+    border-radius: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten($secondary, 20%);
+    }
+  }
+}
