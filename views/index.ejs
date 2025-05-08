@@ -37,10 +37,13 @@
                     <div class="story-buttons">
                       <% if (story.complete) { %>
                         <button onclick="location.href='/stories/read/<%= story.id %>'">READ</button>
-                      <% } else { %>
-                        <p>--story in progress--</p>
-                        <button onclick="location.href='/stories/contribute/<%= story.id %>'">WRITE</button>
-                      <% } %>
+                        <% } else if (story.owner_id == userId) { %>
+                          <p>--story in progress--</p>
+                          <button onclick="location.href='/stories/<%= story.owner_id %>/<%= story.id %>'">MANAGE</button>
+                          <% } else { %>
+                            <p>--story in progress--</p>
+                            <button onclick="location.href='/stories/contribute/<%= story.id %>'">WRITE</button>
+                            <% } %>
                     </div>
                   </div>
                   <p class="story-text">

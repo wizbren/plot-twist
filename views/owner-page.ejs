@@ -40,7 +40,7 @@
                         <button onclick="location.href='/stories/read/<%= story.id %>'">READ</button>
                         <% } else { %>
                           <p>--story in progress--</p>
-                          <button onclick="location.href='/stories/<%= story.owner_id %>/<%= story.id %>'">WRITE</button>
+                          <button onclick="location.href='/stories/<%= story.owner_id %>/<%= story.id %>'">MANAGE</button>
                           <% } %>
                           <button>DELETE</button>
                     </div>
