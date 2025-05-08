@@ -36,9 +36,13 @@
                       <%= story.title %>
                     </h3>
                     <div class="story-buttons">
-                      <button>LIKE</button>
-                      <button>EDIT</button>
-                      <button>DELETE</button>
+                      <% if (story.complete) { %>
+                        <button onclick="location.href='/stories/read/<%= story.id %>'">READ</button>
+                      <% } else { %>
+                        <p>--story in progress--</p>
+                        <button onclick="location.href='/stories/contribute/<%= story.id %>'">WRITE</button>
+                        <button>DELETE</button>
+                      <% } %>
                     </div>
                   </div>
                   <p class="story-text">
