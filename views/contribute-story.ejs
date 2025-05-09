@@ -13,54 +13,71 @@
 
   <%- include('partials/_navBar', { pageTitle: 'Contribute To A Story' }) %>
 
-  <div class="page-layout">
+    <div class="page-layout">
 
-    <%- include('partials/_header') %>
+      <%- include('partials/_header') %>
 
-    <main class="main-content">
+        <main class="main-content">
 
-      <!-- Original Story -->
-      <div class="story-card">
-        <div class="user-info">
-          <img src="<%= story.user_image %>" alt="User Image">
-          <p class="username">User <%= story.owner_id %></p>
-        </div>
-        <div class="story-content">
-          <div class="story-title">
-            <h3><%= story.title %></h3>
-            <span class="likes">❤️ <%= story.likes || 0 %></span>
-          </div>
-          <p class="story-text"><%= story.text_body %></p>
-        </div>
-      </div>
-
-      <!-- Contribution Form -->
-      <form action="/stories/contribute/<%= story.id %>" method="POST" class="contribution-form">
-        <textarea name="text" placeholder="Write your contribution here..." required></textarea>
-        <button type="submit">Submit</button>
-      </form>
-
-      <!-- Submitted Contributions -->
-      <% if (contributions && contributions.length) { %>
-        <% contributions.forEach(contribution => { %>
+          <!-- Original Story -->
           <div class="story-card">
             <div class="user-info">
-              <img src="<%= contribution.user_image %>" alt="User Image">
-              <p class="username"><%= contribution.username %></p>
+              <img src="<%= story.user_image %>" alt="User Image">
+              <p class="username">User <%= story.owner_id %>
+              </p>
             </div>
             <div class="story-content">
               <div class="story-title">
-                <h3>Contribution</h3>
+                <h3>
+                  <%= story.title %>
+                </h3>
+                <span class="likes">❤️ <%= story.likes || 0 %></span>
               </div>
-              <p class="story-text"><%= contribution.text %></p>
-              <p class="likes">❤️ <%= contribution.like_count %> likes</p>
+              <p class="story-text">
+                <%= story.text_body %>
+              </p>
             </div>
           </div>
-        <% }) %>
-      <% } %>
 
-    </main>
-  </div>
+          <!-- Contribution Form -->
+          <form action="/stories/contribute/<%= story.id %>" method="POST" class="contribution-form">
+            <textarea name="text" placeholder="Write your contribution here..." required></textarea>
+            <button type="submit">Submit</button>
+          </form>
+
+          <!-- Submitted Contributions -->
+          <% if (contributions && contributions.length) { %>
+            <% contributions.forEach(contribution=> { %>
+              <div class="story-card">
+                <div class="user-info">
+                  <img src="<%= contribution.user_image %>" alt="User Image">
+                  <p class="username">
+                    <%= contribution.username %>
+                  </p>
+                </div>
+                <div class="story-content">
+                  <div class="story-title">
+                    <h3>Contribution</h3>
+
+                    <!--❤️ like submission form in progress!!!!! ❤️-->
+                    <form action="/stories/likes" method="POST">
+                      <input type="hidden" name="contribution_id" value="<%= contribution.id %>" />
+                      <input type="hidden" name="story_id" value="<%= contribution.story_id %>" />
+                      <button type="submit">❤️ <%= contribution.totalLikes || 0 %></button>
+                    </form>
+
+                  </div>
+                  <p class="story-text">
+                    <%= contribution.text %>
+                  </p>
+                </div>
+              </div>
+              <% }) %>
+                <% } %>
+
+        </main>
+    </div>
 
 </body>
+
 </html>
