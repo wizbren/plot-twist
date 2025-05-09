@@ -65,16 +65,25 @@ router.get('/contribute/:story_id', (req, res) => {
     res.redirect('/login');
     return;
   }
+
   //database query to get a specific story based on a specific user_id that they are contributing to
   stories.getSpecificInProgressStoryNotOwnedByUser(story_id, req.session['user_id'])
     .then((story) => {
       console.log(story);
 
       return stories.getPendingContributionsByStoryId(story_id)
-        .then((contributions) => {
+        .then(async (contributions) => {
+
+          // add like count to each contribution
+          const contributionsWithLikes = [];
+          for (const contribution of contributions) {
+            const like_count = await stories.countContributionLikes(contribution.id);
+            contributionsWithLikes.push({ ...contribution, totalLikes: like_count });
+          }
+
           const templateVars = {
             story,
-            contributions,
+            contributions: contributionsWithLikes,
             userId: req.session.user_id
           };
           res.render('contribute-story', templateVars);
@@ -169,7 +178,23 @@ router.get('/:owner_id', (req, res) => {
 
 //-----------------------------POST----------------------------->
 
-//this is the route that creates new stories now, i havent deleted to code below that is repetitive because im affraid to
+router.post('/likes', (req, res) => {
+  //variables defined
+  const { story_id, contribution_id } = req.body;
+  const userId = req.session.user_id;
+  console.log("Redirecting to: /stories/contribute/", story_id);
+  
+  stories.addLikeToContribution(userId, contribution_id)
+    .then(() => { 
+      res.redirect(`/stories/contribute/${story_id}`)
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(`Error liking contribution`);
+    });
+});
+
+
 router.post('/create', (req, res) => {
   const ownerId = req.session.user_id;
   const { title, text_body } = req.body;
@@ -189,20 +214,16 @@ router.post('/create', (req, res) => {
 router.post('/contribute/:story_id', (req, res) => {
   const { story_id } = req.params;
   const { text } = req.body;
-  const user_id = req.session['user_id'] || 2; //individual contributing the text
+  const user_id = req.session['user_id']; //individual contributing the text
 
-  console.log(story_id, '✅', text, '✅', user_id);
 
   //error handling for blank submissions
   if (!text) {
     return res.status(400).send('No paragraph submitted');
   }
 
-  console.log("this worked 5: ✅")
   stories.submitContribution(user_id, story_id, text) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
-    // console.log("this worked 6: ✅")
     .then(() => {
-      // res.status(200).send('Contribution submitted for approval')
       res.redirect(`/stories/contribute/${story_id}`)
     })
     .catch(err => {
@@ -223,7 +244,6 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (title && text_body) {
     return stories.addInitialStoryContent(owner_id, title, text_body) // this query needs to initialise a story with the data here
       .then(() => {
-        console.log("this worked 1: ✅")
         res.redirect(`/stories/${owner_id}/${story_id}`)
       })
       .catch(err => res.status(500).send(err.message));
@@ -233,11 +253,9 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (action === 'approve') {
     return stories.approveContribution(contribution_id, story_id) //this query needs to append the existing story at the passed story id and add contribution id
       .then(() => {
-        console.log("this worked 2: ✅")
         return stories.clearPendingContributions(story_id) //query must switch all booleans to false for all pending contributions in datatable
       })
       .then(() => {
-        console.log("this worked 3: ✅")
         res.redirect(`/stories/${owner_id}/${story_id}`)
       })
   }
@@ -246,7 +264,6 @@ router.post('/:owner_id/:story_id', (req, res) => {
   if (action === 'finish') {
     return stories.finishStory(story_id) //this query should switch is complete boolean to true
       .then(() => {
-        console.log("this worked 4: ✅")
         res.redirect(`/stories/read/${story_id}`)
       })
   }

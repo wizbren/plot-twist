@@ -208,6 +208,17 @@ const countContributionLikes = (contributionId) => {
     .then(result => result.rows[0].like_count);
 };
 
+const addLikeToContribution = (userId, contributionId) => {
+  const query = `
+  INSERT INTO likes (user_id, contribution_id)
+  VALUES ($1, $2)
+  ON CONFLICT DO NOTHING
+  RETURNING *;
+  `;
+  return db.query(query, [userId, contributionId])
+    .then(result => result.rows[0]);
+};
+
 module.exports = {
   getAllStories,
   getStoryById,
@@ -226,5 +237,6 @@ module.exports = {
   submitContribution,
   approveContribution,
   getPendingContributionsByStoryId,
-  countContributionLikes
+  countContributionLikes,
+  addLikeToContribution
 };
