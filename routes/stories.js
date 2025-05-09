@@ -138,7 +138,7 @@ router.get('/:owner_id/:story_id', (req, res) => {
       return stories.getPendingContributionsByStoryId(story_id) //i will likely need this is more than one view
         .then((contributions) => {
           const templateVars = {
-            userId: req.session.user_id, //user id for header (would be bette as username)
+            userId: req.session.user_id, //user id for header (would be better as username)
             story,           // single story object
             contributions    // array of contribution objects
           };
@@ -183,9 +183,9 @@ router.post('/likes', (req, res) => {
   const { story_id, contribution_id } = req.body;
   const userId = req.session.user_id;
   console.log("Redirecting to: /stories/contribute/", story_id);
-  
+
   stories.addLikeToContribution(userId, contribution_id)
-    .then(() => { 
+    .then(() => {
       res.redirect(`/stories/contribute/${story_id}`)
     })
     .catch(err => {

@@ -17,17 +17,6 @@
 
         <main class="main-content">
 
-          <!-- Super secret hidden text input for first story entry that we cant get to right now when we want to start a story -->
-          <!-- <% if (!story.title || !story.text_body) { %>
-            <section class="initial-submission">
-              <form method="POST" action="/stories/<%= story.owner_id %>/<%= story.id %>">
-                <input type="text" name="title" placeholder="Enter a title for your story" required />
-                <textarea name="text_body" placeholder="Start your story..." required></textarea>
-                <button type="submit" class="form-btn">Start Story</button>
-              </form>
-            </section>
-            <% } else { %> -->
-
               <!-- Finish story button -->
               <div class="owner-story-wrapper">
                 <form method="POST" action="/stories/<%= story.owner_id %>/<%= story.id %>">
