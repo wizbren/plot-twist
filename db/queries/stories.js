@@ -197,7 +197,16 @@ const getPendingContributionsByStoryId = (story_id) => {
     .then((result) => result.rows);
 };
 
+const countContributionLikes = (contributionId) => {
+  const query = `
+    SELECT COUNT(*) AS like_count
+    FROM likes
+    WHERE contribution_id = $1;
+  `;
 
+  return db.query(query, [contributionId])
+    .then(result => result.rows[0].like_count);
+};
 
 module.exports = {
   getAllStories,
@@ -216,5 +225,6 @@ module.exports = {
   clearPendingContributions,
   submitContribution,
   approveContribution,
-  getPendingContributionsByStoryId
+  getPendingContributionsByStoryId,
+  countContributionLikes
 };
