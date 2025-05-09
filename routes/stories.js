@@ -169,6 +169,20 @@ router.get('/:owner_id', (req, res) => {
 
 //-----------------------------POST----------------------------->
 
+router.post('/create', (req, res) => {
+  const ownerId = req.session.user_id;
+  const { title, text_body } = req.body;
+
+  stories.addInitialStoryContent(ownerId, title, text_body)
+    .then(newStory => {
+      res.redirect(`/stories/${ownerId}/${newStory.id}`);
+    })
+    .catch(err => {
+      console.error('Failed to create story:', err);
+      res.status(500).send(err.message);
+    });
+});
+
 // submit button will add contribution to feed
 // note: this should not refresh the page!
 router.post('/contribute/:story_id', (req, res) => {
