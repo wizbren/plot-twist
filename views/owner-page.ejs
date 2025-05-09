@@ -6,6 +6,7 @@
   <title>Plot-Twist - Your Stories</title>
   <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="/styles/front_page.css" />
+  <link rel="stylesheet" href="/styles/owner_all_stories.css" />
 </head>
 
 <body>
@@ -20,6 +21,15 @@
         <!--Main Element area-->
         <main class="main-content"> <!--Trying something out with the filter button-->
           <button class="filter-button" aria-label="Open filter menu">&#9660;</button>
+
+          <!-- this creates a story and adds it to the database then the route redirects you to the new story -->
+            <section class="initial-submission">
+              <form method="POST" action="/stories/create">
+                <input type="text" name="title" placeholder="Enter a title for your story" required />
+                <textarea name="text_body" placeholder="Start your story..." required></textarea>
+                <button type="submit" class="form-btn">Start Story</button>
+              </form>
+            </section>
 
           <section class="user-story-row">
             <% stories.forEach(story=> { %>
@@ -40,7 +50,7 @@
                         <button onclick="location.href='/stories/read/<%= story.id %>'">READ</button>
                         <% } else { %>
                           <p>--story in progress--</p>
-                          <button onclick="location.href='/stories/<%= story.owner_id %>/<%= story.id %>'">WRITE</button>
+                          <button onclick="location.href='/stories/<%= story.owner_id %>/<%= story.id %>'">MANAGE</button>
                           <% } %>
                           <button>DELETE</button>
                     </div>

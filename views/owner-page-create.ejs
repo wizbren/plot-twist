@@ -17,20 +17,20 @@
 
         <main class="main-content">
 
-          <!-- Original Story Block -->
-          <% if (!story.title || !story.text_body) { %>
+          <!-- Super secret hidden text input for first story entry that we cant get to right now when we want to start a story -->
+          <!-- <% if (!story.title || !story.text_body) { %>
             <section class="initial-submission">
-              <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+              <form method="POST" action="/stories/<%= story.owner_id %>/<%= story.id %>">
                 <input type="text" name="title" placeholder="Enter a title for your story" required />
                 <textarea name="text_body" placeholder="Start your story..." required></textarea>
                 <button type="submit" class="form-btn">Start Story</button>
               </form>
             </section>
-            <% } else { %>
+            <% } else { %> -->
 
               <!-- Finish story button -->
               <div class="owner-story-wrapper">
-                <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+                <form method="POST" action="/stories/<%= story.owner_id %>/<%= story.id %>">
                   <input type="hidden" name="action" value="finish" />
                   <button type="submit" class="finish-btn">✓ Finish</button>
                 </form>
@@ -68,11 +68,14 @@
                 <% if (contributions && contributions.length) { %>
                   <% contributions.forEach(contribution=> { %>
                     <div class="contribution-wrapper">
-                      <form method="POST" action="/<%= story.owner_id %>/<%= story.id %>">
+
+                      <!-- approve contribution button -->
+                      <form method="POST" action="/stories/<%= story.owner_id %>/<%= story.id %>">
                         <input type="hidden" name="contribution_id" value="<%= contribution.id %>" />
                         <input type="hidden" name="action" value="approve" />
                         <button type="submit" class="form-btn approve-btn">✓ Approve</button>
                       </form>
+
                       <div class="story-card contribution">
                         <div class="story-header">
                           <div class="user-info">
@@ -92,7 +95,7 @@
                         <p>No pending contributions yet.</p>
                         <% } %>
               </section>
-              <% } %>
+              <!-- <% } %> -->
         </main>
     </div>
 </body>
