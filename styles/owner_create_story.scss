@@ -24,47 +24,6 @@ body {
   font-family: $font-base;
   color: $text;
 
-//I'm not positive that the stuff below here should be in this view but it mostly has to do with the spacing of the page and the initial submission form and i didnt want to mess with it so im just leaving it here.
-
-  .initial-submission {
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-      max-width: 700px;
-      margin: 0 auto;
-
-      input[type="text"],
-      textarea {
-        font-family: $font-base;
-        font-size: 1em;
-        padding: 0.8em;
-        border: 1px solid lighten($primary, 30%);
-        border-radius: 0.5em;
-      }
-
-      textarea {
-        min-height: 150px;
-        resize: vertical;
-      }
-
-      .form-btn {
-        align-self: flex-start;
-        background-color: $primary;
-        color: white;
-        font-weight: bold;
-        border: none;
-        padding: 0.75em 1.25em;
-        border-radius: 0.5em;
-        cursor: pointer;
-
-        &:hover {
-          background-color: darken($primary, 10%);
-        }
-      }
-    }
-  }
-
   .contributions {
     display: flex;
     flex-direction: column;
@@ -75,25 +34,6 @@ body {
       text-align: center;
       font-style: italic;
       color: lighten($text, 30%);
-    }
-
-    // Only applies to "No contributions yet" form
-    >form {
-      margin-top: 1em;
-
-      .form-btn {
-        background-color: $accent;
-        color: white;
-        font-weight: bold;
-        padding: 0.5em 1em;
-        border: none;
-        border-radius: 0.5em;
-        cursor: pointer;
-
-        &:hover {
-          background-color: darken($accent, 10%);
-        }
-      }
     }
   }
 }
