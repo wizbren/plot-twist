@@ -169,6 +169,7 @@ router.get('/:owner_id', (req, res) => {
 
 //-----------------------------POST----------------------------->
 
+//this is the route that creates new stories now, i havent deleted to code below that is repetitive because im affraid to
 router.post('/create', (req, res) => {
   const ownerId = req.session.user_id;
   const { title, text_body } = req.body;
