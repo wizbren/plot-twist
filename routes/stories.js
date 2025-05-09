@@ -65,7 +65,7 @@ router.get('/contribute/:story_id', (req, res) => {
     res.redirect('/login');
     return;
   }
-//database query to get a specific story based on a specific user_id that they are contributing to
+  //database query to get a specific story based on a specific user_id that they are contributing to
   stories.getSpecificInProgressStoryNotOwnedByUser(story_id, req.session['user_id'])
     .then((story) => {
       console.log(story);
@@ -127,14 +127,14 @@ router.get('/:owner_id/:story_id', (req, res) => {
   stories.getInProgressStoryByOwner(story_id, owner_id)
     .then((story) => {
       return stories.getPendingContributionsByStoryId(story_id) //i will likely need this is more than one view
-      .then((contributions) => {
-        const templateVars = {
-          userId: req.session.user_id, //user id for header (would be bette as username)
-          story,           // single story object
-          contributions    // array of contribution objects
-        };
-        res.render('owner-page-create', templateVars);
-      });
+        .then((contributions) => {
+          const templateVars = {
+            userId: req.session.user_id, //user id for header (would be bette as username)
+            story,           // single story object
+            contributions    // array of contribution objects
+          };
+          res.render('owner-page-create', templateVars);
+        });
       // res.json({ message: `page placeholder for owner:${owner_id} story:${story_id}`, story });
     })
     .catch(err => {
@@ -185,8 +185,11 @@ router.post('/contribute/:story_id', (req, res) => {
 
   console.log("this worked 5: ✅")
   stories.submitContribution(user_id, story_id, text) //this query should insert a contribution paragraph into the contributions table (maybe user_id -> contributor_id??)
-  // console.log("this worked 6: ✅")
-    .then(() => res.status(200).send('Contribution submitted for approval'))
+    // console.log("this worked 6: ✅")
+    .then(() => {
+      // res.status(200).send('Contribution submitted for approval')
+      res.redirect(`/stories/contribute/${story_id}`)
+    })
     .catch(err => {
       console.error('Database query error:', err);
       res.status(500).send('Internal Server Error');
@@ -206,7 +209,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
     return stories.addInitialStoryContent(owner_id, title, text_body) // this query needs to initialise a story with the data here
       .then(() => {
         console.log("this worked 1: ✅")
-        res.redirect(`/${owner_id}/${story_id}`)
+        res.redirect(`/stories/${owner_id}/${story_id}`)
       })
       .catch(err => res.status(500).send(err.message));
   }
@@ -220,7 +223,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
       })
       .then(() => {
         console.log("this worked 3: ✅")
-        res.redirect(`/${owner_id}/${story_id}`)
+        res.redirect(`/stories/${owner_id}/${story_id}`)
       })
   }
 
@@ -229,7 +232,7 @@ router.post('/:owner_id/:story_id', (req, res) => {
     return stories.finishStory(story_id) //this query should switch is complete boolean to true
       .then(() => {
         console.log("this worked 4: ✅")
-        res.redirect(`/${owner_id}/${story_id}`)
+        res.redirect(`/stories/read/${story_id}`)
       })
   }
 
