@@ -39,15 +39,15 @@ note: if you need to reset your database run this -> `npm run db:reset`
 
 ## Final Product
 
-!["Screenshot of story creation author view"](https://github.com/Jesse-D-Miller/tweeter/blob/master/docs/tablet-desktop-view.png)
+!["Screenshot of story creation author view"](https://github.com/wizbren/plot-twist/blob/master/docs/story_creation_author_view.png)
 
-!["Screenshot of read story view"](https://github.com/Jesse-D-Miller/tweeter/blob/master/docs/tweet.png)
+!["Screenshot of read story view"](https://github.com/wizbren/plot-twist/blob/master/docs/read_story_view.png)
 
-!["Screenshot of from page"](https://github.com/Jesse-D-Miller/tweeter/blob/master/docs/ganacci-punch.gif)
+!["Screenshot of from page"](https://github.com/wizbren/plot-twist/blob/master/docs/front_page_overview(2).png)
 
-!["Screenshot of form submission author view"](https://github.com/Jesse-D-Miller/tweeter/blob/master/docs/mobile-view.png)
+!["Screenshot of form submission author view"](https://github.com/wizbren/plot-twist/blob/master/docs/form_submission_author_view.png)
 
-!["Screenshot of ERD"](https://github.com/Jesse-D-Miller/tweeter/blob/master/docs/mobile-view.png)
+!["Screenshot of ERD"](https://github.com/wizbren/plot-twist/blob/master/docs/ERD.png)
 
 ## Dependencies
 
